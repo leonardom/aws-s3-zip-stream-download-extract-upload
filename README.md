@@ -115,10 +115,13 @@ yarn add tsconfig-paths -D
 ``` bash
 yarn add eslint -D
 ```
+
 2. Configure eslint rules
+
 ``` bash
 yarn eslint --init
 ```
+
 Select the options:
 
 - How would you like to use ESLint?
@@ -144,6 +147,15 @@ Select the options:
 
 - What format do you want your config file to be in?
   - JSON
+
+3. Create a file **.eslintignore** inside your project base directory:
+
+This file will avoid ESList to check JavaScript config files and compiled JavaScript files inside **dist** directory.
+
+```
+dist
+/*.js
+```
 
 ## Install and configure Jest
 
@@ -178,7 +190,7 @@ Select the options:
 yarn add ts-jest -D
 ```
 
-4. Edit jest.config.js and following configurations:
+4. Edit jest.config.js and add the following configurations:
 
 ``` javascript
 const { compilerOptions } = require('./tsconfig.json');
@@ -192,4 +204,54 @@ module.exports = {
   }),
   // other options
 }
+```
+
+## Configuring Babel to be used for build
+
+1. Install Babel modules:
+
+``` bash
+yarn add -D @babel/cli @babel/core @babel/node @babel/preset-env @babel/preset-typescript babel-plugin-module-resolver
+```
+
+2. Create the file **babel.config.js** inside your project base directory with the following content:
+
+``` javascript
+module.exports = {
+  presets: [
+    [
+      '@babel/preset-env',
+      {
+        targets: {
+          node: 'current'
+        }
+      }
+    ],
+    '@babel/preset-typescript'
+  ],
+  plugins: [
+    ['module-resolver', {
+      alias: {
+        '@config': './src/config',
+        '@controllers': './src/controllers',
+        '@middlewares': './src/middlewares',
+        '@models': './src/models',
+        '@views': './src/views'
+      }
+    }]
+  ],
+  ignore: [
+    '**/*.spec.ts'
+  ]
+}
+```
+
+3. Edit your package.json and create two new commands inside script:
+
+``` json
+"scripts": {
+  // other commands
+  "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
+  "start": "node dist/server.js",
+},
 ```

@@ -1,5 +1,3 @@
-/* eslint object-curly-spacing:
-  ["error", "always", { "arraysInObjects": false }]*/
 const { compilerOptions } = require('./tsconfig.json');
 const { pathsToModuleNameMapper } = require('ts-jest/utils');
 // For a detailed explanation regarding each configuration property, visit:
