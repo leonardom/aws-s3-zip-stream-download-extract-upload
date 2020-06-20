@@ -44,4 +44,39 @@ yarn add ts-node-dev -D
 }
 ```
 
+## Configuring paths
 
+1. Install tsconfig-paths module
+``` bash
+yarn add tsconfig-paths -D
+```
+
+2. Edit the file tsconfig.json and add the following configurations:
+
+``` json
+"baseUrl": ".",
+"paths": {
+  "@controllers/*": [
+    "./src/controllers/*"
+  ],
+  "@models/*": [
+    "./src/models/*"
+  ],
+  "@views/*": [
+    "./src/views/*"
+  ],
+  "@middlewares/*": [
+    "./src/middlewares/*"
+  ],
+  "@config/*": [
+    "./src/config/*"
+  ],
+}
+```
+3. Edit the package.json file and change the "dev" script adding the option **-r tsconfig-paths/register**:
+
+``` json
+"scripts": {
+  "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpileOnly --ignore-watch node_modules --no-notify src/server.ts"
+},
+```
