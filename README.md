@@ -28,12 +28,12 @@ app.get('/', (req, res) => {
 app.listen(3333);
 ```
 ## Install ts-node-dev module 
-This module is responsible to transpile your typescript code to javascript, run it and also it watch your files for modifications. Once they are modified they are transfiled again and your application is restarted.
+This module is responsible to transpile your typescript code to javascript, run it and also to watch yours files for modifications. Once files are modified they are transfiled again and your application is restarted.
 ```
 yarn add ts-node-dev -D
 ```
 
-### Creating a script to execute start you application in development mode
+### Creating a script to start you application in development mode
 
 1. Open the file package.json
 2. Add a new script:
@@ -45,6 +45,25 @@ yarn add ts-node-dev -D
 ```
 
 ## Configuring paths
+Configuring paths will make your life simpler when importing your application modules. Usage example:
+
+src/models/person.tsx:
+```
+export default interface Person {
+  name: string;
+}
+```
+
+src/controllers/people-controller.tsx:
+```
+import Person from "@models/person";
+
+export default class PeopleController {
+  index() {
+    // some code here
+  }
+}
+```
 
 1. Install tsconfig-paths module
 ``` bash
